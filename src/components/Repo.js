@@ -1,18 +1,12 @@
 
 import { useState, useEffect } from "react";
-import Form from './Form';
-import State from "./State";
 import Languages from "./Languages";
 import styles from './Repo.module.scss';
 
 
-function Repo() {
-    const [user, setUser] = useState("jaderAdriel");
-    const [repos, setRepos] = useState([]);
-    const [state, setState] = useState({
-        name:"sucess", message: null
-    });
+function Repo({setState, state, user}) {
     
+    const [repos, setRepos] = useState([]);
     
     useEffect(() => {
         
@@ -22,11 +16,22 @@ function Repo() {
         });
         getUserPublicRepos(user).then(
             (response) => {
-                setState({
-                    name:"sucess", 
-                    message: `: ${user} repos was found`
-                });
-                setRepos(getFilteredRepoInformation(response));
+                
+                const temp =getFilteredRepoInformation(response); 
+                
+                if (temp.length === 0) {
+                    setState({
+                        name:"message", 
+                        message: `: ${user} has no public repository yet`
+                    });
+                } else {
+                    setState({
+                        name:"sucess", 
+                        message: `: ${user} repos was found`
+                    });
+                }
+                
+                setRepos(temp);
             }
         ).catch(
             (err) => {
@@ -36,7 +41,7 @@ function Repo() {
                 });
             }
         );
-    }, [user]);
+    }, [setState, user]);
     
     async function getUserPublicRepos(user) {
         
@@ -74,28 +79,11 @@ function Repo() {
         )
     }
 
-    function showState() {
-        if (repos.length === 0) {
-            setState({
-                name:"message",
-                message:`: ${user} dont have any public repo`
-            })
-        }
-        console.log(state);
-        return <State state={state}/>
-    }
-    console.log(1);
-    function showRepos() {
-        
-        return repos
-    }
 
     return (
         <>
-        <Form setUser={setUser} user={user}/>
-            {showState()}
         <ul className={styles.RepoList}>
-            {showRepos()}
+            {repos}
         </ul>
         </>
     )

@@ -11,7 +11,7 @@ function State({state}) {
     iconMap.set("loading", 'fa-solid fa-spinner');
     iconMap.set("sucess", 'fa-solid fa-check');
     iconMap.set("message", 'fa-solid fa-messages');
-    console.log(2);
+    
     function getState(){
         const icon= iconMap.get(name);
 

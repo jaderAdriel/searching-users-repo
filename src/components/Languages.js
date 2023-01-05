@@ -19,11 +19,10 @@ function Languages({url}) {
     function setListOfLangs(langs) {
         langs = langs.map(( lang )=> {
             return(
-                <span className={styles.lang}>{lang}</span>
+                <li className={styles.lang} key={lang}>{lang}</li>
                 )
         })
         setLangs(langs)
-        
     }
 
     useEffect( () => {
@@ -41,9 +40,9 @@ function Languages({url}) {
     })
 
     return (
-        <div className={styles.langs}>
+        <ul className={styles.langs}>
             {langs}
-        </div>
+        </ul>
     )
 }
 

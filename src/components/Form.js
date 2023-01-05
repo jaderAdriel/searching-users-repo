@@ -2,12 +2,13 @@
 import styles from './Form.module.scss';
 
 function Form({setUser}) {
+    
     function getValue(e) {
         e.preventDefault();
         const user = document.getElementById("user").value;
         setUser(user);
     }
-    console.log(3);
+
     return (
         <form action="." method="post" className={styles.form}>
 

@@ -9,38 +9,39 @@ function Repo({setState, state, user}) {
     const [repos, setRepos] = useState([]);
     
     useEffect(() => {
-        
-        setState({
-            name:"loading", 
-            message: `: searching for ${user} repos`
-        });
-        getUserPublicRepos(user).then(
-            (response) => {
-                
-                const temp =getFilteredRepoInformation(response); 
-                
-                if (temp.length === 0) {
-                    setState({
-                        name:"message", 
-                        message: `: ${user} has no public repository yet`
-                    });
-                } else {
-                    setState({
-                        name:"sucess", 
-                        message: `: ${user} repos was found`
-                    });
+        if (user) {
+            
+            setState({
+                name:"loading", 
+                message: `: searching for ${user} repos`
+            });
+            getUserPublicRepos(user).then(
+                (response) => {
+                    const temp =getFilteredRepoInformation(response); 
+                    
+                    if (temp.length === 0) {
+                        setState({
+                            name:"message", 
+                            message: `: ${user} has no public repository yet`
+                        });
+                    } else {
+                        setState({
+                            name:"sucess", 
+                            message: `: ${user} repos was found`
+                        });
+                    }
+                    
+                    setRepos(temp);
                 }
-                
-                setRepos(temp);
-            }
-        ).catch(
-            (err) => {
-                setState({
-                    name:"error", 
-                    message: `: ${err}`
-                });
-            }
-        );
+            ).catch(
+                    (err) => {
+                        setState({
+                            name:"error", 
+                            message: `: ${err}`
+                        });
+                    }
+            );
+        }
     }, [setState, user]);
     
     async function getUserPublicRepos(user) {

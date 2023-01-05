@@ -1,0 +1,41 @@
+
+
+.state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    &__name {
+        color: rgb(143, 143, 143);
+        font-size: 1em;
+    }
+    i {
+        font-size: 1em;
+    }
+    padding-bottom: 2em;
+}
+
+.error {
+    color: red;
+    animation-play-state: paused;
+}
+.loading {
+    color: rgb(162, 142, 170);
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
+.sucess {
+    color: rgb(82, 179, 82);
+    animation-play-state: paused;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
